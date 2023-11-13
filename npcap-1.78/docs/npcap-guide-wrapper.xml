@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
+[
+<!ENTITY npcap-intro SYSTEM "npcap-intro.xml">
+<!ENTITY npcap-guide SYSTEM "npcap-guide.xml">
+<!ENTITY npcap-devguide SYSTEM "npcap-devguide.xml">
+<!ENTITY npcap-tutorial SYSTEM "npcap-tutorial.xml">
+<!ENTITY npcap-api SYSTEM "npcap-api.xml">
+<!ENTITY npcap-internals SYSTEM "npcap-internals.xml">
+]>
+
+<article id="npcap">
+<articleinfo>
+  <title>Npcap Reference Guide</title>
+  <abstract>
+    <para>A manual and guide to Npcap, a packet capture and network analysis framework for Windows, for users and
+      software developers. Npcap is a modern, safe, and compatible update to WinPcap.</para>
+  </abstract>
+</articleinfo>
+
+&npcap-intro;
+&npcap-guide;
+&npcap-devguide;
+&npcap-api;
+&npcap-tutorial;
+&npcap-internals;
+
+</article>

@@ -1,0 +1,47 @@
+*~
+*.ncb
+*.suo
+*.sdf
+*.opensdf
+*.aps
+*.pdb
+*.exe
+*.msi
+*.zip
+*.ilk
+*.obj
+*.user
+*.cat
+*.sys
+*.dll
+*.ipch
+*.VC.db
+Debug/
+Release/
+OEM Debug/
+OEM Release/
+Win7 Release SDV/
+sdv/
+build.err
+build.log
+msbuild.log
+runsdvui.cmd
+SDV-default.xml
+sdv-user.sdv
+sdv-map.h
+staticdv.job
+StaticDVTrace.log
+npcap.res
+/npcap-sdk/
+/dox/prj/
+*.VC.opendb
+.vs/
+Win* OEM RO Release/
+Win* OEM Release/
+Win* Release/
+Win* Debug/
+x64/
+ARM64/
+/wpcap/build-win32/
+/wpcap/build-x64/
+/wpcap/build-ARM64/

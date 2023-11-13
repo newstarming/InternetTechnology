@@ -1,0 +1,51 @@
+//
+// version.rc2 - resources Microsoft Visual C++ does not edit directly
+//
+
+#ifdef APSTUDIO_INVOKED
+	#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+
+#include "..\..\version.h"
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION		WINPCAP_MAJOR,WINPCAP_MINOR,WINPCAP_REV,WINPCAP_BUILD
+ PRODUCTVERSION		WINPCAP_MAJOR,WINPCAP_MINOR,WINPCAP_REV,WINPCAP_BUILD
+ FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
+#if defined(_DEBUG) && defined(_DEBUG_TO_FILE)
+ FILEFLAGS VS_FF_SPECIALBUILD | VS_FF_DEBUG
+#elseif defined(_DEBUG)
+ FILEFLAGS VS_FF_DEBUG
+#elseif defined(_DEBUG_TO_FILE)
+ FILEFLAGS VS_FF_SPECIALBUILD
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS VOS_NT_WINDOWS32
+ FILETYPE VFT_DLL
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "000004b0"
+        BEGIN
+			VALUE "CompanyName",       WINPCAP_COMPANY_NAME
+			VALUE "FileDescription",   "The Packet API for Windows"
+			VALUE "FileVersion",       WINPCAP_VER_STRING
+			VALUE "InternalName",      "Packet.dll"
+			VALUE "LegalCopyright",    WINPCAP_COPYRIGHT_STRING
+			VALUE "LegalTrademarks",   ""
+			VALUE "OriginalFilename",  "Packet.dll"
+			VALUE "ProductName",       WINPCAP_PRODUCT_NAME
+			VALUE "ProductVersion",    WINPCAP_VER_STRING
+#ifdef _DEBUG_TO_FILE
+			VALUE "SpecialBuild", "LOG_TO_FILE build"
+#endif
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0, 1200
+    END
+END
