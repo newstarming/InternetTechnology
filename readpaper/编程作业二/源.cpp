@@ -11,14 +11,14 @@ using namespace std;
 #pragma warning(disable:4996)
 
 
-//IPÊä³ö¸ñÊ½¸ü¸Ä
+//IPè¾“å‡ºæ ¼å¼æ›´æ”¹
 string CoutIp(unsigned long u) {
     in_addr addr;
     memcpy(&addr, &u, sizeof(u));
     return inet_ntoa(addr);
 }
 
-//½«µØÖ·ÓÉBYTEĞÎÊ½×ª»»Îª16½øÖÆ×Ö·û´®ÀàĞÍ
+//å°†åœ°å€ç”±BYTEå½¢å¼è½¬æ¢ä¸º16è¿›åˆ¶å­—ç¬¦ä¸²ç±»å‹
 string* Byte2Hex(unsigned char bArray[], int bArray_len)
 {
     string* strHex = new string();
@@ -49,10 +49,10 @@ string* Byte2Hex(unsigned char bArray[], int bArray_len)
 }
 
 
-//Ö¸ÏòÒª×ª»»Îª×Ö·û´®µÄÍøÂç×Ö½ÚÖĞµÄ IP µØÖ·µÄÖ¸Õë
+//æŒ‡å‘è¦è½¬æ¢ä¸ºå­—ç¬¦ä¸²çš„ç½‘ç»œå­—èŠ‚ä¸­çš„ IP åœ°å€çš„æŒ‡é’ˆ
 void* get_in_addr(struct sockaddr* sa)
 {
-   //ÅĞ¶ÏÒ»ÏÂÊÇ·ñÎªIP
+   //åˆ¤æ–­ä¸€ä¸‹æ˜¯å¦ä¸ºIP
     if (sa->sa_family == AF_INET)
         return &(((struct sockaddr_in*)sa)->sin_addr);
     return &(((struct sockaddr_in6*)sa)->sin6_addr);
@@ -61,56 +61,56 @@ void* get_in_addr(struct sockaddr* sa)
 #pragma pack(1)
 #define BYTE unsigned char
 
-//Ö¡Ê×²¿
+//å¸§é¦–éƒ¨
 typedef struct FrameHeader_t {
-    BYTE DesMAC[6]; //Ô´MACµØÖ·
-    BYTE SrcMAC[6]; //Ä¿µÄMACµØÖ·
-    WORD FrameType; //Ö¡ÀàĞÍ
+    BYTE DesMAC[6]; //æºMACåœ°å€
+    BYTE SrcMAC[6]; //ç›®çš„MACåœ°å€
+    WORD FrameType; //å¸§ç±»å‹
 }FrameHeader_t;
 
-//ARPÖ¡
+//ARPå¸§
 typedef struct ARPFrame_t {
-    FrameHeader_t FrameHeader; //Ö¡Ê×²¿
-    WORD HardwareType; //Ó²¼şÀàĞÍ
-    WORD ProtocolType; //Ğ­ÒéÀàĞÍ
-    BYTE HLen;//Ó²¼şµØÖ·³¤¶È
-    BYTE PLen;//Ğ­ÒéµØÖ·³¤¶È
-    WORD Operation;//²Ù×÷ÀàĞÍ
-    BYTE SendHa[6];//Ô´MACµØÖ·
-    DWORD SendIP;//Ô´IPµØÖ·
-    BYTE RecvHa[6];//Ä¿µÄMACµØÖ·
-    DWORD RecvIP;//Ä¿µÄIPµØÖ·
+    FrameHeader_t FrameHeader; //å¸§é¦–éƒ¨
+    WORD HardwareType; //ç¡¬ä»¶ç±»å‹
+    WORD ProtocolType; //åè®®ç±»å‹
+    BYTE HLen;//ç¡¬ä»¶åœ°å€é•¿åº¦
+    BYTE PLen;//åè®®åœ°å€é•¿åº¦
+    WORD Operation;//æ“ä½œç±»å‹
+    BYTE SendHa[6];//æºMACåœ°å€
+    DWORD SendIP;//æºIPåœ°å€
+    BYTE RecvHa[6];//ç›®çš„MACåœ°å€
+    DWORD RecvIP;//ç›®çš„IPåœ°å€
 }ARPFrame_t;
 
 
 #pragma pack()
-ARPFrame_t ARPFrame;//Òª·¢ËÍµÄAPRÊı¾İ°ü(ÆäËûÖ÷»ú£©
-ARPFrame_t ARPF_Send;//Òª·¢ËÍµÄAPRÊı¾İ°ü£¨±¾»ú£©
-unsigned char mac[48], desmac[48];//Ä¿µÄÖ÷»úºÍÆäËûÖ÷»úµÄmac
-pcap_t* choosed_dev;//Ñ¡ÔñµÄÍøÂç½Ó¿Ú
+ARPFrame_t ARPFrame;//è¦å‘é€çš„APRæ•°æ®åŒ…(å…¶ä»–ä¸»æœºï¼‰
+ARPFrame_t ARPF_Send;//è¦å‘é€çš„APRæ•°æ®åŒ…ï¼ˆæœ¬æœºï¼‰
+unsigned char mac[48], desmac[48];//ç›®çš„ä¸»æœºå’Œå…¶ä»–ä¸»æœºçš„mac
+pcap_t* choosed_dev;//é€‰æ‹©çš„ç½‘ç»œæ¥å£
 
 void ARP_show(struct pcap_pkthdr* header, const u_char* pkt_data)
 {
     struct ARPFrame_t* arp_protocol;
     arp_protocol = (struct ARPFrame_t*)(pkt_data);
 
-    cout << "Ô´MACµØÖ·£º  " << *(Byte2Hex(arp_protocol->FrameHeader.SrcMAC, 6)) << endl;
-    cout << "Ô´IPµØÖ·£º   " << CoutIp(arp_protocol->SendIP) << endl;
-    cout << "Ä¿µÄMACµØÖ·£º" << *(Byte2Hex(arp_protocol->FrameHeader.DesMAC, 6)) << endl;
-    cout << "Ä¿µÄIPµØÖ·  " << CoutIp(arp_protocol->RecvIP) << endl;
+    cout << "æºMACåœ°å€ï¼š  " << *(Byte2Hex(arp_protocol->FrameHeader.SrcMAC, 6)) << endl;
+    cout << "æºIPåœ°å€ï¼š   " << CoutIp(arp_protocol->SendIP) << endl;
+    cout << "ç›®çš„MACåœ°å€ï¼š" << *(Byte2Hex(arp_protocol->FrameHeader.DesMAC, 6)) << endl;
+    cout << "ç›®çš„IPåœ°å€  " << CoutIp(arp_protocol->RecvIP) << endl;
     cout << endl;
 }
 
-//»ñÈ¡±¾»úÍøÂç½Ó¿ÚµÄMACµØÖ·ºÍIPµØÖ·
+//è·å–æœ¬æœºç½‘ç»œæ¥å£çš„MACåœ°å€å’ŒIPåœ°å€
 pcap_if_t* CAPLIST() {
-    pcap_if_t* alldevs;     //Ö¸ÏòÉè±¸Á´±íÊ×²¿µÄÖ¸Õë
+    pcap_if_t* alldevs;     //æŒ‡å‘è®¾å¤‡é“¾è¡¨é¦–éƒ¨çš„æŒ‡é’ˆ
     pcap_if_t* d;
     pcap_addr_t* a;
     int          n = 1;         
-    char        errbuf[PCAP_ERRBUF_SIZE];//´íÎóĞÅÏ¢»º³åÇø
+    char        errbuf[PCAP_ERRBUF_SIZE];//é”™è¯¯ä¿¡æ¯ç¼“å†²åŒº
 
-   //»ñÈ¡±¾»úµÄÉè±¸ÁĞ±í
-   //µ÷ÓÃpcap_findalldevs£¨£©º¯Êı£¬alldevsÖ¸ÏòµÄÁ´±í°üº¬Ö÷»úÖĞ°²×°µÄÍøÂç½Ó¿ÚÉè±¸ÁĞ±í
+   //è·å–æœ¬æœºçš„è®¾å¤‡åˆ—è¡¨
+   //è°ƒç”¨pcap_findalldevsï¼ˆï¼‰å‡½æ•°ï¼ŒalldevsæŒ‡å‘çš„é“¾è¡¨åŒ…å«ä¸»æœºä¸­å®‰è£…çš„ç½‘ç»œæ¥å£è®¾å¤‡åˆ—è¡¨
     if (pcap_findalldevs_ex(PCAP_SRC_IF_STRING, NULL, &alldevs, errbuf) == -1)
     {
         cout << stderr << "Error in pcap_findalldevs_ex:" << errbuf << endl;
@@ -118,7 +118,7 @@ pcap_if_t* CAPLIST() {
     }
 
 
-    //ÏÔÊ¾½Ó¿ÚÁĞ±í
+    //æ˜¾ç¤ºæ¥å£åˆ—è¡¨
 
     for (d = alldevs; d != NULL; d = d->next)
     {
@@ -127,18 +127,18 @@ pcap_if_t* CAPLIST() {
             cout << "(" << d->description << ")" << endl;
         else
             cout << "(No description )\n";
-        //»ñÈ¡¸ÃÍøÂç½Ó¿ÚµÄIPµØÖ·ĞÅÏ¢
+        //è·å–è¯¥ç½‘ç»œæ¥å£çš„IPåœ°å€ä¿¡æ¯
         for (a = d->addresses; a != NULL; a = a->next) {
-            //ÅĞ¶Ï¸ÃµØÖ·ÊÇ·ñÎªIPµØÖ·
+            //åˆ¤æ–­è¯¥åœ°å€æ˜¯å¦ä¸ºIPåœ°å€
             if (a->addr->sa_family == AF_INET) {
-                //Êä³öÍøÂç½Ó¿Ú¿¨ÉÏ°ó¶¨µÄ¶à¸öIPµØÖ·µÄÏà¹ØĞÅÏ¢
+                //è¾“å‡ºç½‘ç»œæ¥å£å¡ä¸Šç»‘å®šçš„å¤šä¸ªIPåœ°å€çš„ç›¸å…³ä¿¡æ¯
                 char str[INET_ADDRSTRLEN];
-                inet_ntop(AF_INET, get_in_addr((struct sockaddr*)a->addr), str, sizeof(str)); //»ñÈ¡IPµØÖ·
-                cout << "IPµØÖ·£º" << str << endl;
-                inet_ntop(AF_INET, get_in_addr((struct sockaddr*)a->netmask), str, sizeof(str));//»ñÈ¡ÍøÂçÑÚÂë
-                cout << "ÍøÂçÑÚÂë£º" << str << endl;
-                inet_ntop(AF_INET, get_in_addr((struct sockaddr*)a->broadaddr), str, sizeof(str));//»ñÈ¡¹ã²¥µØÖ·
-                cout << "¹ã²¥µØÖ·£º" << str << endl;
+                inet_ntop(AF_INET, get_in_addr((struct sockaddr*)a->addr), str, sizeof(str)); //è·å–IPåœ°å€
+                cout << "IPåœ°å€ï¼š" << str << endl;
+                inet_ntop(AF_INET, get_in_addr((struct sockaddr*)a->netmask), str, sizeof(str));//è·å–ç½‘ç»œæ©ç 
+                cout << "ç½‘ç»œæ©ç ï¼š" << str << endl;
+                inet_ntop(AF_INET, get_in_addr((struct sockaddr*)a->broadaddr), str, sizeof(str));//è·å–å¹¿æ’­åœ°å€
+                cout << "å¹¿æ’­åœ°å€ï¼š" << str << endl;
                
             }
         }
@@ -148,7 +148,7 @@ pcap_if_t* CAPLIST() {
         cout << "\nERROR!\n";
        // return 0;
     }
-    return alldevs;//pcap_findalldevs_exº¯Êıµ÷ÓÃ³É¹¦ºó£¬alldevs²ÎÊıÖ¸Ïò»ñÈ¡µÄÍøÂç½Ó¿ÚÁĞ±íµÄµÚÒ»¸öÔªËØ
+    return alldevs;//pcap_findalldevs_exå‡½æ•°è°ƒç”¨æˆåŠŸåï¼Œalldevså‚æ•°æŒ‡å‘è·å–çš„ç½‘ç»œæ¥å£åˆ—è¡¨çš„ç¬¬ä¸€ä¸ªå…ƒç´ 
 }
 
 
@@ -173,8 +173,8 @@ void SET_ARP_Frame_DEST(ARPFrame_t& ARPFrame , char ip[INET_ADDRSTRLEN],unsigned
     for (int i = 0; i < 6; i++) {
         ARPFrame.FrameHeader.DesMAC[i] = 0xff;
         ARPFrame.RecvHa[i] = 0x00;
-        ARPFrame.FrameHeader.SrcMAC[i] = mac[i];//ÉèÖÃÎª±¾»úÍø¿¨µÄMACµØÖ·
-        ARPFrame.SendHa[i] = mac[i];//ÉèÖÃÎª±¾»úÍø¿¨µÄMACµØÖ·
+        ARPFrame.FrameHeader.SrcMAC[i] = mac[i];//è®¾ç½®ä¸ºæœ¬æœºç½‘å¡çš„MACåœ°å€
+        ARPFrame.SendHa[i] = mac[i];//è®¾ç½®ä¸ºæœ¬æœºç½‘å¡çš„MACåœ°å€
     }
     ARPFrame.FrameHeader.FrameType = htons(0x0806);
     ARPFrame.HardwareType = htons(0x0001);
@@ -189,22 +189,22 @@ void SET_ARP_Frame_DEST(ARPFrame_t& ARPFrame , char ip[INET_ADDRSTRLEN],unsigned
 
 int main() {
 
-    pcap_if_t* alldevs;//Ö¸ÏòÉè±¸Á´±íÊ×²¿µÄÖ¸Õë
+    pcap_if_t* alldevs;//æŒ‡å‘è®¾å¤‡é“¾è¡¨é¦–éƒ¨çš„æŒ‡é’ˆ
     pcap_if_t* d;
     pcap_addr_t* a;
    
-    char errbuf[PCAP_ERRBUF_SIZE];//´íÎóĞÅÏ¢»º³åÇø
+    char errbuf[PCAP_ERRBUF_SIZE];//é”™è¯¯ä¿¡æ¯ç¼“å†²åŒº
     alldevs = CAPLIST();
     cout << "---------------------------------------------------------------------------------------------------------------------\n\n";
     
-    //Éè±¸Á´±íÊ×²¿µÄÖ¸Õë
+    //è®¾å¤‡é“¾è¡¨é¦–éƒ¨çš„æŒ‡é’ˆ
     d = alldevs;
 
     int j;
-    cout << "ÇëÑ¡Ôñ·¢ËÍÊı¾İ°üµÄÍø¿¨£º";
+    cout << "è¯·é€‰æ‹©å‘é€æ•°æ®åŒ…çš„ç½‘å¡ï¼š";
     cin >> j;
     int i = 0;
-    //»ñÈ¡Ö¸ÏòÑ¡Ôñ·¢ËÍÊı¾İ°üÍø¿¨µÄÖ¸Õë
+    //è·å–æŒ‡å‘é€‰æ‹©å‘é€æ•°æ®åŒ…ç½‘å¡çš„æŒ‡é’ˆ
     
     while (i < j - 1) {
         i++;
@@ -212,42 +212,42 @@ int main() {
     }
     
 
-    //´ò¿ªÓÃ»§Ñ¡ÔñÉè±¸µÄÍø¿¨
+    //æ‰“å¼€ç”¨æˆ·é€‰æ‹©è®¾å¤‡çš„ç½‘å¡
     choosed_dev = pcap_open(d->name, 100, PCAP_OPENFLAG_PROMISCUOUS, 1000, NULL, errbuf);
     
     if (choosed_dev == NULL) {
         cout << "Error pcap_open!" << errbuf << endl;
-        //Ê§°Ü¾ÍÊÍ·ÅÉè±¸ÁĞ±í£»
+        //å¤±è´¥å°±é‡Šæ”¾è®¾å¤‡åˆ—è¡¨ï¼›
         pcap_freealldevs(alldevs);
         return 0;
     }
-    //±£´æÍø¿¨µÄipµØÖ·£¨Ö¸Ïò»º³åÇøµÄÖ¸Õë£¬ÓÃÓÚ´æ´¢ IP µØÖ·µÄ NULL ÖÕÖ¹×Ö·û´®±íÊ¾ĞÎÊ½¡££©
+    //ä¿å­˜ç½‘å¡çš„ipåœ°å€ï¼ˆæŒ‡å‘ç¼“å†²åŒºçš„æŒ‡é’ˆï¼Œç”¨äºå­˜å‚¨ IP åœ°å€çš„ NULL ç»ˆæ­¢å­—ç¬¦ä¸²è¡¨ç¤ºå½¢å¼ã€‚ï¼‰
     char ip[INET_ADDRSTRLEN];
 
 
     for (a = d->addresses; a != NULL; a = a->next) {
-        //ÅĞ¶Ï¸ÃµØÖ·ÊÇ·ñÎªIPµØÖ·
+        //åˆ¤æ–­è¯¥åœ°å€æ˜¯å¦ä¸ºIPåœ°å€
         if (a->addr->sa_family == AF_INET) {
-        //InetNtop º¯Êı½« IPv4 »ò IPv6 Internet ÍøÂçµØÖ·×ª»»Îª²ÉÓÃ Internet ±ê×¼¸ñÊ½µÄ×Ö·û´®->ip
+        //InetNtop å‡½æ•°å°† IPv4 æˆ– IPv6 Internet ç½‘ç»œåœ°å€è½¬æ¢ä¸ºé‡‡ç”¨ Internet æ ‡å‡†æ ¼å¼çš„å­—ç¬¦ä¸²->ip
             inet_ntop(AF_INET, get_in_addr((struct sockaddr*)a->addr), ip, sizeof(ip));
         }
     }
     cout << ip;
     cout << endl << d->name << endl;
 
-    //»ñÈ¡±¾»úµÄMACµØÖ·
+    //è·å–æœ¬æœºçš„MACåœ°å€
    
-    //ÉèÖÃARPÖ¡Ïà¹Ø
+    //è®¾ç½®ARPå¸§ç›¸å…³
     SET_ARP_Frame_HOST(ARPF_Send, ip);
 
     struct pcap_pkthdr* pkt_header;
     const u_char* pkt_data;
     struct pcap_pkthdr* header = new pcap_pkthdr;
     int k;
-    //·¢ËÍ¹¹ÔìºÃµÄÊı¾İ°ü
-    //ÓÃpcap_next_ex()²¶»ñÊı¾İ°ü£¬pkt_dataÖ¸Ïò²¶»ñµ½µÄÍøÂçÊı¾İ°ü
+    //å‘é€æ„é€ å¥½çš„æ•°æ®åŒ…
+    //ç”¨pcap_next_ex()æ•è·æ•°æ®åŒ…ï¼Œpkt_dataæŒ‡å‘æ•è·åˆ°çš„ç½‘ç»œæ•°æ®åŒ…
     while ((k = pcap_next_ex(choosed_dev, &pkt_header, &pkt_data)) >= 0) {
-        //·¢ËÍÊı¾İ°ü
+        //å‘é€æ•°æ®åŒ…
        /* if (pcap_sendpacket(choosed_dev, (u_char*)&ARPF_Send, sizeof(ARPFrame_t)) != 0) {
             cout << "Error in pcap_sendpacket";
             pcap_freealldevs(alldevs);
@@ -259,18 +259,18 @@ int main() {
         arp_message = (struct ARPFrame_t*)(pkt_data);
            if (k == 0)continue;
            else
-           {   //Ö¡ÀàĞÍÎªARP£¬ÇÒ²Ù×÷ÀàĞÍÎªARPÏìÓ¦£¬SendIpÎª·¢ËÍµÄÊı¾İ°üÖĞµÄRecvIP
+           {   //å¸§ç±»å‹ä¸ºARPï¼Œä¸”æ“ä½œç±»å‹ä¸ºARPå“åº”ï¼ŒSendIpä¸ºå‘é€çš„æ•°æ®åŒ…ä¸­çš„RecvIP
                /* if (*(unsigned short*)(pkt_data + 12) == htons(0x0806) && *(unsigned short*)(pkt_data + 20) == htons(0x0002)
                    && *(unsigned long*)(pkt_data + 28) == ARPF_Send.RecvIP) {*/
 
                if(arp_message->FrameHeader.FrameType==htons(0x0806)&& arp_message->Operation == htons(0x0002)){
-                   cout << "ARPÊı¾İ°ü£º\n";
-                   ARP_show(header, pkt_data);//´òÓ¡ÏàÓ¦µÄĞÅÏ¢
-                   //ÓÃMACµØÖ·¼ÇÂ¼±¾»úµÄMACµØÖ·£¬ÓÃÓÚºóĞø¹¹ÔìARPÊı¾İ°ü
+                   cout << "ARPæ•°æ®åŒ…ï¼š\n";
+                   ARP_show(header, pkt_data);//æ‰“å°ç›¸åº”çš„ä¿¡æ¯
+                   //ç”¨MACåœ°å€è®°å½•æœ¬æœºçš„MACåœ°å€ï¼Œç”¨äºåç»­æ„é€ ARPæ•°æ®åŒ…
                    for (int i = 0; i < 6; i++) {
                        mac[i] = *(unsigned char*)(pkt_data + 22 + i);
                    }
-                   cout << "»ñÈ¡±¾»úMACµØÖ·Îª£º" << *(Byte2Hex(mac, 6)) << endl;
+                   cout << "è·å–æœ¬æœºMACåœ°å€ä¸ºï¼š" << *(Byte2Hex(mac, 6)) << endl;
                    break;
                }
            }
@@ -281,17 +281,17 @@ int main() {
     }
     cout << "-------------------------------------------------------------------------------------------------------------------------------------------\n\n";
     
-    //ÉèÖÃARPÖ¡
+    //è®¾ç½®ARPå¸§
 
     SET_ARP_Frame_DEST(ARPFrame,ip, mac, desmac);
 
-    cout << "ÇëÊäÈëÄ¿µÄÖ÷»úµÄIPµØÖ·£º";
+    cout << "è¯·è¾“å…¥ç›®çš„ä¸»æœºçš„IPåœ°å€ï¼š";
     char desip[INET_ADDRSTRLEN];
     cin >> desip;
-    ARPFrame.RecvIP = inet_addr(desip); //ÉèÖÃÎªÇëÇóµÄIPµØÖ·
+    ARPFrame.RecvIP = inet_addr(desip); //è®¾ç½®ä¸ºè¯·æ±‚çš„IPåœ°å€
 
     while ((k = pcap_next_ex(choosed_dev, &pkt_header, &pkt_data)) >= 0) {
-        //pcap_sendpacket£¨£©·¢ËÍ¹¹ÔìºÃµÄÊı¾İ°ü
+        //pcap_sendpacketï¼ˆï¼‰å‘é€æ„é€ å¥½çš„æ•°æ®åŒ…
         /*
         if (pcap_sendpacket(choosed_dev, (u_char*)&ARPFrame, sizeof(ARPFrame_t)) != 0) {
             cout << "Error in pcap_sendpacket";
@@ -309,13 +309,13 @@ int main() {
         //    //&& *(unsigned long*)(pkt_data + 28) == ARPFrame.RecvIP
         //    ) {
          if (arp_message->FrameHeader.FrameType == htons(0x0806) && arp_message->Operation == htons(0x0002) && *(unsigned long*)(pkt_data + 28) == ARPFrame.RecvIP) {
-            cout << "ARPÊı¾İ°ü£º\n";
+            cout << "ARPæ•°æ®åŒ…ï¼š\n";
             ARP_show(header, pkt_data);
             for (int i = 0; i < 6; i++) {
-            //¼ÇÂ¼µÃµ½µÄÄ¿µÄÖ÷»úµÄMACµØÖ·
+            //è®°å½•å¾—åˆ°çš„ç›®çš„ä¸»æœºçš„MACåœ°å€
                 desmac[i] = *(unsigned char*)(pkt_data + 22 + i);
             }
-            cout << "»ñÈ¡Ä¿µÄÖ÷»úµÄMACµØÖ·Îª£º" << *(Byte2Hex(desmac, 6)) << endl;
+            cout << "è·å–ç›®çš„ä¸»æœºçš„MACåœ°å€ä¸ºï¼š" << *(Byte2Hex(desmac, 6)) << endl;
             break;
         }
     }

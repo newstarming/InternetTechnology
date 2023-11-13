@@ -1,31 +1,32 @@
 {
-    "configurations": [
+    // c_cpp_properties.json文件是用来配置C/C++的编译器路径、头文件路径、智能提示模式等信息的。
+    "configurations": [ // 配置项
         {
-            "name": "Win32",
-            "includePath": [
-                "${workspaceRoot}",
-                "D:/Program Files/mingw/mingw64/include/**",
+            "name": "Win32", // 配置项名称
+            "includePath": [ // 头文件路径
+                "${workspaceRoot}", // 工作区根目录
+                "D:/Program Files/mingw/mingw64/include/**", // MinGW安装目录
                 "D:/Program Files/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++",
                 "D:/Program Files/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32",
                 "D:/Program Files/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward",
                 "D:/Program Files/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include",
                 "D:/Program Files/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed",
                 "D:/Program Files/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include",
-                "D:/ProgramData/SDK/npcap-sdk-1.13/Include",
-                "D:/ProgramData/SDK/npcap-sdk-1.13/Lib/**"
+                "D:/ProgramData/SDK/npcap-sdk-1.13/Include", // Npcap SDK安装目录
+                "D:/ProgramData/SDK/npcap-sdk-1.13/Lib/**" // Npcap SDK安装目录
             ],
-            "defines": [
+            "defines": [ // 宏定义
                 "_DEBUG",
                 "UNICODE",
                 "__GNUC__=6",
                 "__cdecl=__attribute__((__cdecl__))"
             ],
-            "compilerPath": "D:/Program Files/mingw/mingw64/bin/g++.exe",
-            "intelliSenseMode": "windows-gcc-x64",
-            "browse": {
-                "limitSymbolsToIncludedHeaders": true,
-                "databaseFilename": "",
-                "path": [
+            "compilerPath": "D:/Program Files/mingw/mingw64/bin/g++.exe", // 编译器路径
+            "intelliSenseMode": "windows-gcc-x64", // 智能提示模式
+            "browse": { // 浏览器
+                "limitSymbolsToIncludedHeaders": true, // 限制符号到包含的头文件
+                "databaseFilename": "", // 数据库文件名
+                "path": [ // 路径
                     "${workspaceRoot}",
                      "D:/Program Files/mingw/mingw64/include/**",
                      "D:/Program Files/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++",

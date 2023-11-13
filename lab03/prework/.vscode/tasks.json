@@ -1,4 +1,5 @@
 {
+    // tasks.json是用来配置任务的，这里我们使用g++作为编译器
     "tasks": [
         {
             "type": "cppbuild",

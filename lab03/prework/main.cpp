@@ -3,7 +3,9 @@
 #include<WinSock2.h>
 #include<process.h>
 #include<bitset>
+#ifndef WIN32
 #define WIN32
+#endif
 #define HAVE_REMOTE
 #define BYTE unsigned char
 using namespace std;
@@ -153,19 +155,10 @@ void Capture() {
     }
     if ((pcap_next_ex(choosed_dev, &pkt_header, &pkt_data)) == -1)
         cout << "error in pcap_next_ex" << endl;
-
-
-   
-
 }
 
 
 int main() {
-
-    //CAPLIST();
-   
-    
-    
     pcap_if_t  *alldevs;//指向设备链表首部的指针
     alldevs= CAPLIST();
     //选择要监听的设备
@@ -176,16 +169,9 @@ int main() {
     cin >> m;
     //监听选定的网络接口卡---打开网络接口
     CHOOSEDEV(m,  D,  alldevs);
-
-    
-   
-    
     Capture();
 
     pcap_freealldevs(alldevs);
-
-    
-
 }
 
 

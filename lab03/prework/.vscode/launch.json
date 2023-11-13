@@ -2,6 +2,7 @@
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    // launch.json是用来配置调试器的，这里我们使用gdb作为调试器
     "version": "0.2.0",  
     "configurations": [  
         
