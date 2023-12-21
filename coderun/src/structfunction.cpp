@@ -203,7 +203,7 @@ void RouteTable::erase(int index) {
 	num--;
 	my_log.addInfo("路由表删除成功!");
 	return ;	
-	}
+}
 
 //打印路由表
 void RouteTable::print() {
@@ -218,7 +218,6 @@ void RouteTable::print() {
 	printf("共有路由表项：");
 	printf("%d   ", num);
 	printf("条/n");
-	
 }
 
 //查找下一跳的IP地址(参数为目的ip地址）
@@ -236,10 +235,7 @@ DWORD RouteTable::search(DWORD dst_ip) {
 			else
 			a = t->next_hop;
 		}
-
-
 	}
-
 	return a;
 }
 
@@ -259,10 +255,8 @@ Log::~Log()
 }
 //日志信息标识
 void Log::addInfo(const char* str) {
-
 	fprintf(my_fp, str);
 	fprintf(my_fp, "\n");
-
 }
 void Log::addInfohop(const char* str/*日志信息标识*/, DWORD hop) {
 	fprintf(my_fp, str);

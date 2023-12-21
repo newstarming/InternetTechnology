@@ -38,7 +38,6 @@ void* get_in_addr(struct sockaddr* sa)
 }
 
 //比较两个MAC地址是否相同
-
 bool Compare(BYTE a[6], BYTE b[6])
 {
 	bool like = true;
@@ -50,10 +49,7 @@ bool Compare(BYTE a[6], BYTE b[6])
 	return like;
 }
 
-
-
 //展示ARP数据帧
-
 void ShowArp(ARPFrame_t* p) {
 
 	in_addr addr;
@@ -78,8 +74,6 @@ void ShowArp(ARPFrame_t* p) {
 	printf("%02X", p->RecvHa[5]);
 	printf("\n");
 }
-
-
 
 /*打开网卡获取双IP*/
 void  Get_Two_IP() {
@@ -153,6 +147,7 @@ void  Get_Two_IP() {
 
 
 /*获取本机MAC地址*/
+//构造ARP数据帧
 void SET_ARP_Frame_HOST(ARPFrame_t& ARPFrame1, DWORD ip) {
 	for (int i = 0; i < 6; i++) {
 		ARPFrame1.FrameHeader.DesMAC[i] = 0xff;//广播地址
