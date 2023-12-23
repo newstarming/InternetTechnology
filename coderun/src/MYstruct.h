@@ -123,7 +123,6 @@ public:
 	void erase(int number);//删除第i条路由表项，直接相连的不能删除
 	void print();
 	DWORD search(DWORD dstip);//根据最长匹配原则查找下一跳的ip地址
-
 };
 
 /*ARP地址映射表*/

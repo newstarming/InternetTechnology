@@ -179,7 +179,6 @@ void Get_Host_Mac(DWORD ip) {
 	//发送构造好的数据包
 	//用pcap_next_ex()捕获数据包，pkt_data指向捕获到的网络数据包
 
-	//这里可能后续需要修改
 	while ((k = pcap_next_ex(open_dev, &pkt_header, &pkt_data)) >= 0) {
 		//发送数据包
 	  
